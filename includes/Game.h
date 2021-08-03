@@ -7,7 +7,6 @@ class Game{
     public: 
 
     Game();
-    Game(sf::Vector2i size, float scale);
 
     void Run();
     void Pause();
@@ -20,8 +19,9 @@ class Game{
     void HandleInputs();
 
         Grid grid;
-
         sf::RenderWindow window;
         bool is_running;
 
+        sf::Clock clock;
+        float tresh_hold, delta_time;
 };

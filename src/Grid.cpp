@@ -3,17 +3,14 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- CONSTRUCTOR / DESTRUCTOR -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     Grid::Grid(){
-        size = sf::Vector2u(15,10);
+        size = sf::Vector2u(150,100);
         scale = 10;
+        Init(size,scale);
     }
 
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PUBLIC  FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
-    // rules: 
-    // dead + 2/3 alive -> alive
-    // alive + <2 & >3 alive -> dead
-    // 
     void Grid::Update(){
         
         std::vector<sf::Vector2i> changes;
@@ -25,7 +22,7 @@
                 if ( map[i][j] && (count < 2 || count > 3))
                     changes.push_back(sf::Vector2i(i,j));
                 
-                // new born cond
+                // spawn cond
                 if (!map[i][j] && count == 3)
                     changes.push_back(sf::Vector2i(i,j));
 
@@ -64,6 +61,14 @@
         if (cell.first < size.x && cell.second < size.y){
             map[cell.first][cell.second] = true; 
             active.insert(cell);
+        }
+    }
+
+    void Grid::SetInactive(std::pair<int,int> cell){
+
+        if (cell.first < size.x && cell.second < size.y){
+            map[cell.first][cell.second] = false; 
+            active.erase(cell);
         }
     }
 

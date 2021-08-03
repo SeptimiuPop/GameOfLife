@@ -13,6 +13,7 @@ class Grid{
     void Update();
     void Draw(sf::RenderWindow*);
     void SetActive(std::pair<int,int>);
+    void SetInactive(std::pair<int,int>);
     void SetSize(sf::Vector2u);
     void Clear();
 

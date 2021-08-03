@@ -2,20 +2,23 @@
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- CONSTRUCTOR / DESTRUCTOR -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
-    Game::Game (): is_running(false){
+    Game::Game (): is_running(false), delta_time(0), tresh_hold(0.05){
                    Init();
     }
-    
-    Game::Game (sf::Vector2i size_d, float scale_d): 
-                is_running(false){
-                Init();
-    } 
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PUBLIC  FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     void Game::Run(){
         while (window.isOpen()){
-            Update();
+            
+            delta_time += clock.getElapsedTime().asSeconds();
+            clock.restart();
+            
+            if (delta_time >= tresh_hold){
+                Update();
+                delta_time = 0;
+            }
+
             HandleInputs();
         }
     }
@@ -23,17 +26,18 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PRIVATE FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     void Game::Init(){
-        window.create(sf::VideoMode(1500, 1000), "Hello", sf::Style::Default);
-        grid.Init(sf::Vector2u(150,100), 10);
+        window.create(sf::VideoMode(1500, 1000), "Game Of Life - alpha 1.1", sf::Style::Default);
     }
 
     /*
-    *
-    * close window
-    * detect inputs 
-    * start / pause game
-    * rezise
-    * editor (drawing) mode with mouse 
+    *   To do:
+    * add time setting
+    * add window size setting
+    * 
+    *   Extra: 
+    * UI with instructions and adjustments
+    * add view (so we can zoom in and explore the details)
+    * 
     * 
     */
     void Game::Update(){
@@ -67,6 +71,12 @@
                     if (ev.key.code == sf::Keyboard::C)
                         grid.Clear();
 
+                    if (ev.key.code == sf::Keyboard::Q)
+                        if (tresh_hold > 0.05) tresh_hold -= 0.05;
+                    
+                    if (ev.key.code == sf::Keyboard::E)
+                        if (tresh_hold < 1) tresh_hold += 0.05;
+
                     if (ev.key.code == sf::Keyboard::Escape)
                         window.close();
                     break;
@@ -77,9 +87,16 @@
             }
         }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-            sf::Vector2i mouse = sf::Mouse::getPosition(window);
-            std::pair<int,int> pos(mouse.x/10, mouse.y/10);
+        sf::Vector2i mouse = sf::Mouse::getPosition(window);
+        std::pair<int,int> pos(int(mouse.x/10), int(mouse.y/10));
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left )) {
             grid.SetActive(pos);
+            grid.Draw(&window);
+        }
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+            grid.SetInactive(pos);
+            grid.Draw(&window);
         }
     }
