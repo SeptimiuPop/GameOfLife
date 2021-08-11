@@ -1,0 +1,26 @@
+
+
+    =-=-=-=-=-=-=-=-=
+    #   TO DO       #
+    =-=-=-=-=-=-=-=-=
+
+        * IMPROVE GAME RULES SYSTEM             (   more transparent and scalable               )
+        * FURTHER IMPROVE GRID UPDATE SYSTEM    (   move from 2d vector to 1d "active" vector   )
+
+    =-=-=-=-=-=-=-=-=
+    #   EXTRA       #
+    =-=-=-=-=-=-=-=-=
+
+        * UI    (   buttons /menus /options /info   )
+        * VIEW  (   zoom in/out & view movement     )
+
+    =-=-=-=-=-=-=-=-=
+    #   DONE        #
+    =-=-=-=-=-=-=-=-=
+
+    11/AUG/2021
+        * SALING NOW DECOUPLED FORM GRID FUNCTIONALITY
+        * ADDED TIMER TO REGULATE UPDATES
+        * DELEGATED GAME CLASS TO DO THE DRAWING
+        * MINOR IMPROVEMENTS TO PERFORMANCE 
+   

@@ -2,8 +2,8 @@
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- CONSTRUCTOR / DESTRUCTOR -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
-    Game::Game (): is_running(false), delta_time(0), tresh_hold(0.05){
-                   Init();
+    Game::Game (): is_running(false), scale(10){
+        InitWindow();
     }
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PUBLIC  FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
@@ -11,49 +11,65 @@
     void Game::Run(){
         while (window.isOpen()){
             
-            delta_time += clock.getElapsedTime().asSeconds();
+            DELTA_TIME += clock.getElapsedTime().asSeconds();
             clock.restart();
             
-            if (delta_time >= tresh_hold){
+            if (DELTA_TIME >= UPDATE_TRESHOLD){
                 Update();
-                delta_time = 0;
+                DELTA_TIME = 0;
             }
-
             HandleInputs();
+            Draw();
         }
     }
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PRIVATE FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
-    void Game::Init(){
+    void Game::InitWindow(){
         window.create(sf::VideoMode(1500, 1000), "Game Of Life - alpha 1.1", sf::Style::Default);
     }
 
     /*
     *   To do:
-    * add time setting
-    * add window size setting
     * 
     *   Extra: 
     * UI with instructions and adjustments
     * add view (so we can zoom in and explore the details)
     * 
     * 
+    * 
     */
-    void Game::Update(){
-        if (is_running){
-            grid.Update();
+
+    void Game::Draw (){
+        window.clear();
+        
+        sf::RectangleShape shape;
+        shape.setSize(sf::Vector2f(scale-2,scale-2));
+        shape.setFillColor(sf::Color::Green);
+        
+        std::set<std::pair<int,int>> active = grid.GetActive(); 
+
+        for (auto cell : active){
+            shape.setPosition(sf::Vector2f(cell.first*scale+1, cell.second*scale+1));
+            window.draw(shape);
         }
-        grid.Draw(&window);
+
+        window.display();
 
     }
 
+    void Game::Update(){
+        // Internal grid not "paused"
+        if (is_running){
+            grid.Update();
+        }
+    }
+
     void Game::HandleInputs(){
-        sf::Event ev;
 
-        while (window.pollEvent(ev)){
+        while (window.pollEvent(event)){
 
-            switch (ev.type){
+            switch (event.type){
 
                 // Close Button event 
                 case sf::Event::Closed:
@@ -62,22 +78,22 @@
                 
                 // KeyReleased event 
                 case sf::Event::KeyReleased:{
-                    if (ev.key.code == sf::Keyboard::Space)
+                    if (event.key.code == sf::Keyboard::Space)
                         is_running = !is_running;
                     
-                    if (ev.key.code == sf::Keyboard::S)
-                        {grid.Update(); grid.Draw(&window);}
+                    if (event.key.code == sf::Keyboard::S)
+                        {grid.Update(); Draw();}
 
-                    if (ev.key.code == sf::Keyboard::C)
+                    if (event.key.code == sf::Keyboard::C)
                         grid.Clear();
-
-                    if (ev.key.code == sf::Keyboard::Q)
-                        if (tresh_hold > 0.05) tresh_hold -= 0.05;
                     
-                    if (ev.key.code == sf::Keyboard::E)
-                        if (tresh_hold < 1) tresh_hold += 0.05;
+                    if (event.key.code == sf::Keyboard::Q)
+                        if (UPDATE_TRESHOLD > 0.05) UPDATE_TRESHOLD -= 0.05;
+                    
+                    if (event.key.code == sf::Keyboard::E)
+                        if (UPDATE_TRESHOLD < 0.5) UPDATE_TRESHOLD += 0.05;
 
-                    if (ev.key.code == sf::Keyboard::Escape)
+                    if (event.key.code == sf::Keyboard::Escape)
                         window.close();
                     break;
                 }
@@ -87,16 +103,26 @@
             }
         }
 
-        sf::Vector2i mouse = sf::Mouse::getPosition(window);
-        std::pair<int,int> pos(int(mouse.x/10), int(mouse.y/10));
-
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left )) {
-            grid.SetActive(pos);
-            grid.Draw(&window);
+            grid.SetActive(MousePosToPair());
+            Draw();
         }
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-            grid.SetInactive(pos);
-            grid.Draw(&window);
+            grid.SetInactive(MousePosToPair());
+            Draw();
         }
+    }
+
+
+
+    std::pair<int,int> Game::MousePosToPair(){
+        
+        sf::Vector2i mouse = sf::Mouse::getPosition(window);
+        
+        std::pair<int,int> pos;
+        pos.first  = int(mouse.x/scale);
+        pos.second = int(mouse.y/scale);
+        
+        return pos;
     }

@@ -7,25 +7,31 @@ class Grid{
     public:
 
     Grid();
+    Grid(sf::Vector2u);
 
-    void Init(sf::Vector2u, float);
 
     void Update();
-    void Draw(sf::RenderWindow*);
-    void SetActive(std::pair<int,int>);
+    void SetActive  (std::pair<int,int>);
     void SetInactive(std::pair<int,int>);
     void SetSize(sf::Vector2u);
     void Clear();
 
+    std::set<std::pair<int,int>> GetActive();
+
 
     private:
     
-    int GetAdjacent(int x, int y);
+    void Init(sf::Vector2u, float);
+    int  GetAdjacent(int x, int y);
+    bool IsValidCell(std::pair<int,int> cell);
+
 
         sf::Vector2u size;
-        float scale;
 
         std::vector<std::vector<bool>> map;
         std::set<std::pair<int,int>> active;
+        // std::set<sf::Vector2f> inactive;
+
+        float UPDATE_TRESHOLD = 0.05;
 
 };

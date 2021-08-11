@@ -14,14 +14,22 @@ class Game{
 
     private:
     
-    void Init();
+    void InitWindow();
+    void Draw();
     void Update();
     void HandleInputs();
+    std::pair<int,int> MousePosToPair();
 
         Grid grid;
+
         sf::RenderWindow window;
+        sf::Event event;
         bool is_running;
 
+        float scale;
+
         sf::Clock clock;
-        float tresh_hold, delta_time;
+        float UPDATE_TRESHOLD = 0.05;
+        float UPDATE_TRESHOLD = 0.05;
+        float DELTA_TIME = 0;
 };

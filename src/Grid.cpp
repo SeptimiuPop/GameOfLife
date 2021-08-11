@@ -4,8 +4,13 @@
 
     Grid::Grid(){
         size = sf::Vector2u(150,100);
-        scale = 10;
-        Init(size,scale);
+        SetSize(size);
+    }
+
+    Grid::Grid(sf::Vector2u grid_size){
+        if (grid_size.x > 0 && grid_size.y > 0)
+            size = grid_size;
+        SetSize(size);
     }
 
 
@@ -28,45 +33,27 @@
 
             }
         }
-        for (auto c : changes){
-            if(map[c.x][c.y])
-                map[c.x][c.y]=0;
-            else
-                map[c.x][c.y]=1;
-        }                
-    }
-
-    void Grid::Draw (sf::RenderWindow* window){
-        window->clear();
-        
-        sf::RectangleShape shape;
-        shape.setSize(sf::Vector2f(scale-2,scale-2));
-        shape.setFillColor(sf::Color::Green);
-        
-        for (int i=0; i<size.x; i++){
-            for (int j=0; j<size.y; j++){
-                if(map[i][j]){
-                    shape.setPosition(sf::Vector2f(i*scale+1,j*scale+1));
-                    window->draw(shape);
-                }
+        for (auto aux : changes){
+            if (map[aux.x][aux.y]){
+                map[aux.x][aux.y] =0;
+                active.erase(std::pair<int,int>(aux.x,aux.y));
             }
-        }
-
-        window->display();
-
+            else{
+                map[aux.x][aux.y] =1;
+                active.insert(std::pair<int,int>(aux.x,aux.y));
+            }
+        }                
     }
     
     void Grid::SetActive(std::pair<int,int> cell){
-
-        if (cell.first < size.x && cell.second < size.y){
+        if(IsValidCell(cell)){
             map[cell.first][cell.second] = true; 
             active.insert(cell);
         }
     }
 
     void Grid::SetInactive(std::pair<int,int> cell){
-
-        if (cell.first < size.x && cell.second < size.y){
+        if(IsValidCell(cell)){
             map[cell.first][cell.second] = false; 
             active.erase(cell);
         }
@@ -92,7 +79,7 @@
     void Grid::Clear(){
         map.clear();
         
-        // resize
+        // resets grid completley
         map.resize(size.x);
         for (int i=0; i < size.x; i++)
             map[i].resize(size.y);
@@ -100,16 +87,12 @@
         active.clear();
     }
 
+    std::set<std::pair<int,int>> Grid::GetActive(){
+        return active;
+    }
+
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PRIVATE FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
-
-
-    void Grid::Init(sf::Vector2u grid_size, float grid_scale){
-        if (grid_size.x > 0 && grid_size.y > 0)
-            size = grid_size;
-        if (grid_scale > 0)
-            scale = grid_scale;
-        SetSize(size);
-    }   
+ 
 
     int Grid::GetAdjacent(int x, int y){
         int count = 0;
@@ -121,4 +104,12 @@
                     count ++;
                 
         return count;
+    }
+
+    bool Grid::IsValidCell(std::pair<int,int> cell){
+        // check if a cell fits in the current grid
+        if (cell.first  < size.x && cell.first  >= 0 &&  
+            cell.second < size.y && cell.second >= 0)
+            return true;
+        return false;
     }
