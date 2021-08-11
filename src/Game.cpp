@@ -88,9 +88,21 @@
                     break;
                 }
 
-                // Mouse Wheel Zoom
+                // Mouse wheel zoom + Grid resize 
                 case sf::Event::MouseWheelScrolled:{
                     scale += event.mouseWheelScroll.delta;
+                    
+                    sf::Vector2u grid_rescale = window.getSize();
+                    grid_rescale.x /= scale;
+                    grid_rescale.y /= scale;
+                    grid.SetSize(grid_rescale);
+                    
+                    break;
+                }
+
+                // grid * scale = window
+
+                case sf::Event::Resized:{
                     break;
                 }
 
