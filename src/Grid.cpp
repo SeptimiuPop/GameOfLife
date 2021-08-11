@@ -63,7 +63,8 @@
     }
 
     void Grid::SetSize(sf::Vector2u new_size){
-
+        
+        size = new_size;
         // clear map
         map.clear();
         
@@ -73,10 +74,15 @@
             map[i].resize(new_size.y);
         
         // add active nodes
+        std::set<std::pair<int,int>> inactive;
         for (auto cell : active){
-            map[cell.first][cell.second] = true;
+            if(IsValidCell(cell))
+                map[cell.first][cell.second] = true;
+            else 
+                inactive.insert(cell);
         }
-
+        for (auto cell : inactive)
+            active.erase(cell);
     }
 
     void Grid::Clear(){

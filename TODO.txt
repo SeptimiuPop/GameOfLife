@@ -5,6 +5,7 @@
     =-=-=-=-=-=-=-=-=
 
         * FURTHER IMPROVE GRID UPDATE SYSTEM    (   move from 2d vector to 1d "active" vector   )
+        * IMPROVE RESCALING AND ADD WINDOW RESIZING
 
     =-=-=-=-=-=-=-=-=
     #   EXTRA       #
