@@ -30,6 +30,5 @@ class Game{
 
         sf::Clock clock;
         float UPDATE_TRESHOLD = 0.05;
-        float UPDATE_TRESHOLD = 0.05;
         float DELTA_TIME = 0;
 };

@@ -5,12 +5,14 @@
     Grid::Grid(){
         size = sf::Vector2u(150,100);
         SetSize(size);
+        SetRules();          
     }
 
     Grid::Grid(sf::Vector2u grid_size){
         if (grid_size.x > 0 && grid_size.y > 0)
             size = grid_size;
         SetSize(size);
+        SetRules();          
     }
 
 
@@ -22,17 +24,18 @@
         int count;
         for (int i=0; i<size.x; i++){
             for (int j=0; j<size.y; j++){
-                count = GetAdjacent(i,j);
-                // die cond
-                if ( map[i][j] && (count < 2 || count > 3))
-                    changes.push_back(sf::Vector2i(i,j));
                 
-                // spawn cond
-                if (!map[i][j] && count == 3)
+                count = GetAdjacent(i,j);
+                
+                // determine wether we use die cond or spawn cond
+                bool alive = map[i][j];  
+                
+                if(rules[count][alive] != alive)
                     changes.push_back(sf::Vector2i(i,j));
 
             }
         }
+
         for (auto aux : changes){
             if (map[aux.x][aux.y]){
                 map[aux.x][aux.y] =0;
@@ -112,4 +115,19 @@
             cell.second < size.y && cell.second >= 0)
             return true;
         return false;
+    }
+
+    void Grid::SetRules(){
+        
+        for (int j=0; j<2; j++)
+        for (int k=0; k<9; k++)
+        rules[k][j] = 0;
+
+        // spawn cond 
+        rules[3][0] = 1;
+        
+        // live cond
+        rules[2][1] = 1;
+        rules[3][1] = 1;
+        rules[6][1] = 1;
     }

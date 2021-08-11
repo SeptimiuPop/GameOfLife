@@ -14,6 +14,7 @@ class Grid{
     void SetActive  (std::pair<int,int>);
     void SetInactive(std::pair<int,int>);
     void SetSize(sf::Vector2u);
+    void SetRules();
     void Clear();
 
     std::set<std::pair<int,int>> GetActive();
@@ -25,7 +26,7 @@ class Grid{
     int  GetAdjacent(int x, int y);
     bool IsValidCell(std::pair<int,int> cell);
 
-
+        bool rules [9][2];
         sf::Vector2u size;
 
         std::vector<std::vector<bool>> map;

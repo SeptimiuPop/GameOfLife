@@ -26,19 +26,9 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PRIVATE FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     void Game::InitWindow(){
-        window.create(sf::VideoMode(1500, 1000), "Game Of Life - alpha 1.1", sf::Style::Default);
+        window.create(sf::VideoMode(1500, 1000), "Game Of Life - alpha 1.2", sf::Style::Default);
     }
 
-    /*
-    *   To do:
-    * 
-    *   Extra: 
-    * UI with instructions and adjustments
-    * add view (so we can zoom in and explore the details)
-    * 
-    * 
-    * 
-    */
 
     void Game::Draw (){
         window.clear();
@@ -82,7 +72,7 @@
                         is_running = !is_running;
                     
                     if (event.key.code == sf::Keyboard::S)
-                        {grid.Update(); Draw();}
+                        grid.Update(); 
 
                     if (event.key.code == sf::Keyboard::C)
                         grid.Clear();
@@ -98,20 +88,22 @@
                     break;
                 }
 
+                // Mouse Wheel Zoom
+                case sf::Event::MouseWheelScrolled:{
+                    scale += event.mouseWheelScroll.delta;
+                    break;
+                }
+
                 default: 
                     break;
             }
         }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left )) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left ))
             grid.SetActive(MousePosToPair());
-            Draw();
-        }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
             grid.SetInactive(MousePosToPair());
-            Draw();
-        }
     }
 
 

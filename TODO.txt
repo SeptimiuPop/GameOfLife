@@ -4,7 +4,6 @@
     #   TO DO       #
     =-=-=-=-=-=-=-=-=
 
-        * IMPROVE GAME RULES SYSTEM             (   more transparent and scalable               )
         * FURTHER IMPROVE GRID UPDATE SYSTEM    (   move from 2d vector to 1d "active" vector   )
 
     =-=-=-=-=-=-=-=-=
@@ -13,6 +12,7 @@
 
         * UI    (   buttons /menus /options /info   )
         * VIEW  (   zoom in/out & view movement     )
+        * SNAKE (   minigame where the tail creates new nodes for the grid  )
 
     =-=-=-=-=-=-=-=-=
     #   DONE        #
@@ -23,4 +23,8 @@
         * ADDED TIMER TO REGULATE UPDATES
         * DELEGATED GAME CLASS TO DO THE DRAWING
         * MINOR IMPROVEMENTS TO PERFORMANCE 
+        * IMPROVE GAME RULES SYSTEM             (   more transparent and scalable   )
+                                                //  RULES: (0 1 2 3 4 5 6 7 8) 
+                                                alive = 0:  0 0 0 1 0 0 0 0 0 
+                                                alive = 1:  0 0 1 1 0 0 0 0 0 
    
