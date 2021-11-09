@@ -12,4 +12,4 @@ g++ *.o -o main.exe -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system # t
 ./main.exe 
 
 cd ..
-ls src
+ls App/src
