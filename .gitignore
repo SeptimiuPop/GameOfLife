@@ -1,4 +1,4 @@
 # ignores the binaries folder where the code is compiled
-**bin/
+**/bin/
 # ignores vscode's settings directory
 .vscode/
