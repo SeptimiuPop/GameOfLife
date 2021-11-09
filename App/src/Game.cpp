@@ -1,30 +1,30 @@
 #include "Game.h"
+#include <string>
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- CONSTRUCTOR / DESTRUCTOR -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
-    Game::Game (): is_running(false), scale(10){
+    Game::Game (): is_grid_running(false), scale(10){
         InitWindow();
-        std::cout<<UPDATE_TRESHOLD;
     }
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PUBLIC  FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     void Game::Run(){
         while (window.isOpen()){
-            
+
             DELTA_TIME = clock.getElapsedTime().asSeconds();
             clock.restart();
             
             UPDATE_TIMER += DELTA_TIME;
             RENDER_TIMER += DELTA_TIME;
 
-            if (UPDATE_TIMER >= UPDATE_TRESHOLD){
-                UPDATE_TIMER = 0;
-                Update();
-            }
             if (RENDER_TIMER >= RENDER_TRESHOLD){
                 RENDER_TIMER = 0;
                 Draw();
+            }
+            if (UPDATE_TIMER >= UPDATE_TRESHOLD){
+                UPDATE_TIMER = 0;
+                Update();
             }
 
             HandleInputs();
@@ -45,26 +45,36 @@
         shape.setSize(sf::Vector2f(scale-2,scale-2));
         shape.setFillColor(sf::Color::Green);
         
-        std::set<std::pair<int,int>> active = grid.GetActive(); 
+        sf::Text text;
+        sf::Font font;
+        font.loadFromFile("../assets/open-sans/OpenSans-Bold.ttf");
+        text.setFont(font);
+        text.setCharacterSize(15);
+        text.setPosition(sf::Vector2f(0,0));
+        text.setFillColor(sf::Color::Red);
+        std::string pi = std::to_string(DELTA_TIME);
+        text.setString(pi);
 
-        for (auto cell : active){
+
+        for (auto cell : grid.GetActive()){
             shape.setPosition(sf::Vector2f(cell.first*scale+1, cell.second*scale+1));
             window.draw(shape);
         }
 
-        window.display();
+        window.draw(text);
 
+        window.display();
     }
 
     void Game::Update(){
         // Internal grid not "paused"
-        if (is_running){
+        if (is_grid_running){
             grid.Update();
         }
     }
 
     void Game::HandleInputs(){
-        std::cout<<UPDATE_TRESHOLD<<"\n";
+        
         while (window.pollEvent(event)){
 
             switch (event.type){
@@ -77,7 +87,7 @@
                 // KeyReleased event 
                 case sf::Event::KeyReleased:{
                     if (event.key.code == sf::Keyboard::Space)
-                        is_running = !is_running;
+                        is_grid_running = !is_grid_running;
                     
                     if (event.key.code == sf::Keyboard::S)
                         grid.Update(); 
@@ -86,7 +96,7 @@
                         grid.Clear();
                     
                     if (event.key.code == sf::Keyboard::Q)
-                        if (UPDATE_TRESHOLD > 0.034) UPDATE_TRESHOLD -= 0.05;
+                        if (UPDATE_TRESHOLD > 0.017) UPDATE_TRESHOLD -= 0.05;
                     
                     if (event.key.code == sf::Keyboard::E)
                         if (UPDATE_TRESHOLD < 0.40) UPDATE_TRESHOLD += 0.05;

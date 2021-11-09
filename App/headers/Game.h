@@ -24,13 +24,13 @@ class Game{
 
         sf::RenderWindow window;
         sf::Event event;
-        bool is_running;
+        bool is_grid_running;
 
         float scale;
 
         sf::Clock clock;
-        float UPDATE_TRESHOLD = 1/30.f;
-        float RENDER_TRESHOLD = 1/30.f;
+        float UPDATE_TRESHOLD = 1/60.f;
+        float RENDER_TRESHOLD = 1/60.f;
         
         float UPDATE_TIMER = 0;
         float RENDER_TIMER = 0;

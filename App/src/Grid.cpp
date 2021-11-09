@@ -135,5 +135,6 @@
         // live cond
         rules[2][1] = 1;
         rules[3][1] = 1;
+        rules[4][1] = 1;
         rules[6][1] = 1;
     }
