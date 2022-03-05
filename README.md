@@ -11,7 +11,19 @@ The software requirements to run must be the following :
 - C++ 11 or above
 - SFML library installed
 
-### Setup work
+## Controls
+
+- Escape : Close application
+- Left Click : Fill cell
+- Right Click : Clear cell
+- Mouse Scroll : Zoom in/out
+- Space Bar : Pause animation
+- C : Clear entire grid
+- Q : Speed up animation 
+- E : Slow down animation 
+- S : Update grid by one step 
+
+## Project setup 
 
 From the terminal use the following commands to give users permission to run the scripts. Replace File-name with the name of the shell script you want to give permission to :
 
@@ -53,15 +65,3 @@ After forking the repository to your local machine and making some local changes
 ```
 
 Uppon using this command you will be prompted to write a commit message. To confirm and move to the next step press enter
-
-## Controls
-
-- Escape : Close application
-- Left Click : Fill cell
-- Right Click : Clear cell
-- Mouse Scroll : Zoom in/out
-- Space Bar : Pause animation
-- C : Clear entire grid
-- Q : Speed up animation 
-- E : Slow down animation 
-- S : Update grid by one step 
