@@ -13,7 +13,7 @@ The software requirements to run must be the following :
 
 ## Controls
 
-Key | Action 
+Key Binds | Actions 
 ------------ | ------------- 
 Escape | Close application
 Left Click | Fill cell
