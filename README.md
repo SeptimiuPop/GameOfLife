@@ -53,3 +53,15 @@ After forking the repository to your local machine and making some local changes
 ```
 
 Uppon using this command you will be prompted to write a commit message. To confirm and move to the next step press enter
+
+## Controls
+
+- Escape : Close application
+- Left Click : Fill cell
+- Right Click : Clear cell
+- Mouse Scroll : Zoom in/out
+- Space Bar : Pause animation
+- C : Clear entire grid
+- Q : Speed up animation 
+- E : Slow down animation 
+- S : Update grid by one step 

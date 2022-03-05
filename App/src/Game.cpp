@@ -11,30 +11,32 @@
 
     void Game::Run(){
         while (window.isOpen()){
+            if(window.hasFocus()){
+                DELTA_TIME = clock.getElapsedTime().asSeconds();
+                clock.restart();
+                
+                UPDATE_TIMER += DELTA_TIME;
+                RENDER_TIMER += DELTA_TIME;
 
-            DELTA_TIME = clock.getElapsedTime().asSeconds();
-            clock.restart();
-            
-            UPDATE_TIMER += DELTA_TIME;
-            RENDER_TIMER += DELTA_TIME;
+                if (RENDER_TIMER >= RENDER_TRESHOLD){
+                    RENDER_TIMER = 0;
+                    Draw();
+                }
+                if (UPDATE_TIMER >= UPDATE_TRESHOLD){
+                    UPDATE_TIMER = 0;
+                    Update();
+                }
 
-            if (RENDER_TIMER >= RENDER_TRESHOLD){
-                RENDER_TIMER = 0;
-                Draw();
+                HandleInputs();
+
             }
-            if (UPDATE_TIMER >= UPDATE_TRESHOLD){
-                UPDATE_TIMER = 0;
-                Update();
-            }
-
-            HandleInputs();
         }
     }
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PRIVATE FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     void Game::InitWindow(){
-        window.create(sf::VideoMode(1500, 1000), "Game Of Life - alpha 1.2", sf::Style::Default);
+        window.create(sf::VideoMode(1600, 900), "Game Of Life - alpha 1.2", sf::Style::Default);
     }
 
 
@@ -90,7 +92,8 @@
                         is_grid_running = !is_grid_running;
                     
                     if (event.key.code == sf::Keyboard::S)
-                        grid.Update(); 
+                        if (!is_grid_running)
+                            grid.Update(); 
 
                     if (event.key.code == sf::Keyboard::C)
                         grid.Clear();
