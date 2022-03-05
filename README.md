@@ -13,15 +13,17 @@ The software requirements to run must be the following :
 
 ## Controls
 
-- Escape : Close application
-- Left Click : Fill cell
-- Right Click : Clear cell
-- Mouse Scroll : Zoom in/out
-- Space Bar : Pause animation
-- C : Clear entire grid
-- Q : Speed up animation 
-- E : Slow down animation 
-- S : Update grid by one step 
+Key | Action 
+------------ | ------------- 
+Escape | Close application
+Left Click | Fill cell
+Right Click | Clear cell
+Mouse Scroll | Zoom in/out
+Space Bar | Pause animation
+C | Clear entire grid
+Q | Speed up animation 
+E | Slow down animation 
+S | Update grid by one step 
 
 ## Project setup 
 
