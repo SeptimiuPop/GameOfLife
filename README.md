@@ -23,7 +23,7 @@ Space Bar | Pause animation
 C | Clear entire grid
 Q | Speed up animation 
 E | Slow down animation 
-S | Update grid by one step 
+S | Advance grid by one step 
 
 ## Project setup 
 

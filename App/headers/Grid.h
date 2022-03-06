@@ -32,7 +32,4 @@ class Grid{
         std::vector<std::vector<bool>> map;
         std::set<std::pair<int,int>> active;
         // std::set<sf::Vector2f> inactive;
-
-        float UPDATE_TRESHOLD = 0.05;
-
 };

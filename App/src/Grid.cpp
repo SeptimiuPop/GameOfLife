@@ -130,11 +130,24 @@
         rules[k][j] = 0;
 
         // spawn cond 
-        rules[2][0] = 1;
+        // rules[0][0] = 1;
+        rules[1][0] = 1;
+        // rules[2][0] = 1;
+        // rules[3][0] = 1;
+        // rules[4][0] = 1;
+        // rules[5][0] = 1;
+        // rules[6][0] = 1;
+        // rules[7][0] = 1;
+        // rules[8][0] = 1;
         
         // live cond
+        // rules[0][1] = 1;
+        // rules[1][1] = 1;
         // rules[2][1] = 1;
         // rules[3][1] = 1;
         // rules[4][1] = 1;
+        // rules[5][1] = 1;
         // rules[6][1] = 1;
+        // rules[7][1] = 1;
+        // rules[8][1] = 1;
     }
