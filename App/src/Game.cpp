@@ -47,6 +47,23 @@
         shape.setSize(sf::Vector2f(scale-2,scale-2));
         shape.setFillColor(sf::Color::Green);
         
+
+        for (auto cell : grid.GetActive()){
+            shape.setPosition(sf::Vector2f(cell.first*scale+1, cell.second*scale+1));
+            window.draw(shape);
+        }
+
+        DrawFPS();
+
+        window.display();
+    }
+
+    void Game::DrawFPS(){
+        sf::RectangleShape shape;
+        shape.setSize(sf::Vector2f(125, 20));
+        shape.setFillColor(sf::Color::White);
+        shape.setPosition(sf::Vector2f(0,0));
+
         sf::Text text;
         sf::Font font;
         font.loadFromFile("../assets/open-sans/OpenSans-Bold.ttf");
@@ -54,18 +71,13 @@
         text.setCharacterSize(15);
         text.setPosition(sf::Vector2f(0,0));
         text.setFillColor(sf::Color::Red);
-        std::string pi = std::to_string(DELTA_TIME);
+        
+        std::string pi = "FPS: ";
+        pi.append(std::to_string(DELTA_TIME));
+        
         text.setString(pi);
-
-
-        for (auto cell : grid.GetActive()){
-            shape.setPosition(sf::Vector2f(cell.first*scale+1, cell.second*scale+1));
-            window.draw(shape);
-        }
-
+        window.draw(shape);
         window.draw(text);
-
-        window.display();
     }
 
     void Game::Update(){

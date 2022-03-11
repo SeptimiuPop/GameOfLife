@@ -16,9 +16,11 @@ class Game{
     
     void InitWindow();
     void Draw();
+    void DrawFPS();
     void Update();
     void HandleInputs();
     std::pair<int,int> MousePosToPair();
+
 
         Grid grid;
 
