@@ -36,7 +36,7 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- PRIVATE FUNCTIONS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     void Game::InitWindow(){
-        window.create(sf::VideoMode(1600, 900), "Game Of Life - alpha 1.2", sf::Style::Default);
+        window.create(sf::VideoMode(1500, 900), "Game Of Life - alpha 1.2", sf::Style::Default);
     }
 
 
@@ -61,20 +61,26 @@
     void Game::DrawFPS(){
         sf::RectangleShape shape;
         shape.setSize(sf::Vector2f(125, 20));
-        shape.setFillColor(sf::Color::White);
+        shape.setFillColor(sf::Color::Black);
         shape.setPosition(sf::Vector2f(0,0));
 
         sf::Text text;
         sf::Font font;
-        font.loadFromFile("../assets/open-sans/OpenSans-Bold.ttf");
+        font.loadFromFile("./assets/open-sans/OpenSans-Bold.ttf");
         text.setFont(font);
         text.setCharacterSize(15);
         text.setPosition(sf::Vector2f(0,0));
-        text.setFillColor(sf::Color::Red);
         
         std::string pi = "FPS: ";
         pi.append(std::to_string(DELTA_TIME));
         
+        if (DELTA_TIME > 1/30.f)
+            text.setFillColor(sf::Color::Red);
+        else if (DELTA_TIME > 1/60.f)
+            text.setFillColor(sf::Color::Yellow);
+        else
+            text.setFillColor(sf::Color::Green);
+
         text.setString(pi);
         window.draw(shape);
         window.draw(text);

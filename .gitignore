@@ -2,3 +2,4 @@
 **/bin/
 # ignores vscode's settings directory
 .vscode/
+push.sh
