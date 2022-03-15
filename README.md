@@ -30,11 +30,11 @@ S | Advance grid by one step
 
 SFML can be installed dirrectly from the website by following the instructions or cloned from the [repository](https://github.com/SeptimiuPop/2D-Game-Engine/tree/main/External/SFML).
 
-If the latter is chosen, all directories except `include` and `lib` in the SFML folder can be removed. In order to compile the code properly the `build.sh` file should have the following changes :
+If the latter is chosen, all directories except `include` and `lib` in the SFML folder can be removed. In order to compile the code properly the `Makefile` file should include the following changes :
 
 ```
-g++ -c ../src/*.cpp -I <SFML/include Path>
-g++ *.o -o main.exe -L <SFML/lib Path> -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system # to link.
+	@$(CC) -c $(SRC) $(INCLUDES)  <SFML/include Path>
+	@$(CC) *.o -o $(EXE_PATH) $(LIBS) <SFML/lib Path> 
 ```
 
 Where `<SFML/include Path>` and `<SFML/lib Path>` are replaced by the path of the include and lib directories in the cloned SFML folder
@@ -43,44 +43,29 @@ Where `<SFML/include Path>` and `<SFML/lib Path>` are replaced by the path of th
 
 ### Prepare the commands
 
-From the terminal use the following commands to give users permission to run the scripts. Replace File-name with the name of the shell script you want to give permission to :
-
-```properties
-sudo chmod u+x <file-name>
-```  
-Example :
-
-```properties
-sudo chmod u+x run.sh
-```  
 In order to successfully build and run the application you must create a folder named bin where the build files will go. To do this use the following command from the terminal :
 
 ```properties
 mkdir bin
-```  
+```
+
+Other names can also be used for the directory but the 'BIN_PATH' in the Makefile should be changed accordingly
+
 ---
 
 ### Launch the Application
 
-From the terminal use the following command to build and launch the application
+From the terminal use the following command to build and launch the application :
 
-`
-./run.sh
-`  
+` make run `  
+
+### Build the application
+From the terminal use the following command to compile the code in the bin folder created previously, and run it :
+
+`make build`
 
 ### Clear the previous build for the application
 
-From the terminal use the following command to clear the build
+From the terminal use the following command to clear the build :
 
-`
-./clear.sh
-`
-### Pushs changes to your repository
-
-After forking the repository to your local machine and making some local changes, use the following command to add all changes, commit with a message and push to the remote repository 
-
-`
-./push.sh
-`
-
-Uppon using this command you will be prompted to write a commit message. To confirm and move to the next step press enter
+` make clear `
