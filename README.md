@@ -33,8 +33,8 @@ SFML can be installed dirrectly from the website by following the instructions o
 If the latter is chosen, all directories except `include` and `lib` in the SFML folder can be removed. In order to compile the code properly the `Makefile` file should include the following changes :
 
 ```
-	@$(CC) -c $(SRC) $(INCLUDES)  <SFML/include Path>
-	@$(CC) *.o -o $(EXE_PATH) $(LIBS) <SFML/lib Path> 
+@$(CC) -c $(SRC) $(INCLUDES)  <SFML/include Path>
+@$(CC) *.o -o $(EXE_PATH) $(LIBS) <SFML/lib Path> 
 ```
 
 Where `<SFML/include Path>` and `<SFML/lib Path>` are replaced by the path of the include and lib directories in the cloned SFML folder
