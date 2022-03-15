@@ -30,7 +30,7 @@ S | Advance grid by one step
 
 SFML can be installed dirrectly from the website by following the instructions or cloned from the [repository](https://github.com/SeptimiuPop/2D-Game-Engine/tree/main/External/SFML).
 
-If the latter (cloning) is chosen, all directories except `include` and `lib` in the SFML folder can be removed. In order to compile the code properly the `build.sh` file should have the following changes :
+If the latter is chosen, all directories except `include` and `lib` in the SFML folder can be removed. In order to compile the code properly the `build.sh` file should have the following changes :
 
 ```
 g++ -c ../src/*.cpp -I <SFML/include Path>
